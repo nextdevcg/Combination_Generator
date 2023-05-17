@@ -1,76 +1,65 @@
-To achieve random font styles (bold, italic, underline) and random colors, as well as increase the size of the console log, you can modify the code as follows:
+# Combination Generator
 
-```javascript
-const fs = require('fs');
-const chalk = require('chalk');
+```markdown
+# Combination Generator
 
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+This combination generator is a Node.js application that generates combinations of characters and logs them to the console and a file. The application allows you to resume generating combinations from where you left off, and provides options for customizing the console log appearance.
 
-function getRandomStyle() {
-  const styles = ['bold', 'italic', 'underline'];
-  const randomIndex = Math.floor(Math.random() * styles.length);
-  return styles[randomIndex];
-}
+run 'node combi.js' to generate combinations, it will populate 'combinations.txt' file.
 
-async function generateCombinations(letters, wordLength, currentWord = '') {
-  if (currentWord.length === wordLength) {
-    // Save the combination to the file
-    fs.appendFileSync('combinations.txt', currentWord + ',');
+run 'node findWords.js' to generate and search in dictonary, it will populate 'word_meaning.json' file.
 
-    // Clear the console
-    console.clear();
+run 'node isword.js' it is a little game, it prompts random word, if you say it is a valid word it saves the word in 'words.txt' file.
 
-    // Generate a random color
-    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+## Features
 
-    // Generate a random style
-    const randomStyle = getRandomStyle();
+- Generates combinations of characters
+- Supports resuming from the last generated combination
+- Customizes the console log appearance with random colors, font styles (bold, italic, underline), and increased font size
+- Saves the generated combinations to a file
 
-    // Apply font style and size
-    const styledMessage = chalk.rgb(255, 255, 255).bgHex(randomColor)[randomStyle].bold(currentWord);
-    console.log(styledMessage);
-    return;
-  }
+## Usage
 
-  for (let i = 0; i < letters.length; i++) {
-    const newWord = currentWord + letters[i];
+1. Clone the repository:
 
-    // Delay before generating the next combination
-    await delay(500);
-    await generateCombinations(letters, wordLength, newWord);
-  }
-}
+   ```shell
+   git clone https://github.com/nextdevcg/Combination_Generator.git
+   ```
 
-// Define the letters and maximum word length
-const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
-const maxLength = 12;
+2. Install the dependencies:
 
-// Increase the font size of console.log
-console.log('\n');
-console.log('\x1b[1m');
+   ```shell
+   cd Combination_Generator
+   npm install
+   ```
 
-// Generate combinations for word lengths from 1 to maxLength
-(async () => {
-  for (let wordLength = 1; wordLength <= maxLength; wordLength++) {
-    await generateCombinations(letters, wordLength);
-  }
+3. Customize the options (if desired):
 
-  console.log('Combinations saved to combinations.txt');
-})();
+   - Modify the `letters` variable in `index.js` to define the characters to generate combinations from.
+   - Adjust the `maxLength` variable in `index.js` to set the maximum length of the generated combinations.
+   - Modify the delay duration in the `delay` function in `index.js` to control the delay between each combination generation.
+
+4. Run the application:
+
+   ```shell
+   node combi.js
+   ```
+
+   The application will start generating combinations and logging them to the console. The combinations will also be saved to the `combinations.txt` file in the project directory.
+
+5. To pause and resume the combination generation:
+
+   - Press `Ctrl + C` to stop the application.
+   - Run the application again using the same command (`node index.js`).
+
+   The application will read the last generated combination from the `combinations.txt` file and resume generating combinations from the next iteration.
+
+## Attribution
+
+This code was created using ChatGPT, a language model developed by OpenAI. ChatGPT is trained on a diverse range of internet text, including programming code, to provide natural language responses and assist with code-related tasks.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 ```
-
-In this modified code:
-
-- The `getRandomStyle` function is introduced to select a random font style (bold, italic, underline).
-- The `randomColor` variable is generated using a random hex value to represent a random color.
-- The `randomStyle` variable selects a random font style using the `getRandomStyle` function.
-- The `styledMessage` variable applies the random color, font style, and size to the log message using `chalk`.
-
-Additionally:
-
-- Before generating the combinations, we print two new lines `console.log('\n')` to increase the space between the command prompt and the logs.
-- We use `console.log('\x1b[1m')` to increase the font size of subsequent `console.log` calls.
-
-Now, when you run the modified code, the console logs will display with random colors, random font styles (bold, italic, underline), and an increased font size.
+Prompted by Titas Mallick.
