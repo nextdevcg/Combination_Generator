@@ -6,7 +6,7 @@ function delay(ms) {
 }
 
 function getRandomStyle() {
-  const styles = ['bold', 'italic', 'underline'];
+  const styles = ['italic', 'underline', 'inverse', 'bold'];
   const randomIndex = Math.floor(Math.random() * styles.length);
   return styles[randomIndex];
 }
