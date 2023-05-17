@@ -11,6 +11,15 @@ function getRandomStyle() {
   return styles[randomIndex];
 }
 
+function getRandomCapitalization(word) {
+  let capitalizedWord = '';
+  for (let i = 0; i < word.length; i++) {
+    const randomCase = Math.random() < 0.5 ? 'toUpperCase' : 'toLowerCase';
+    capitalizedWord += word[i][randomCase]();
+  }
+  return capitalizedWord;
+}
+
 async function generateCombinations(letters, wordLength, currentWord = '') {
   if (currentWord.length === wordLength) {
     // Save the combination to the file
@@ -25,8 +34,11 @@ async function generateCombinations(letters, wordLength, currentWord = '') {
     // Generate a random style
     const randomStyle = getRandomStyle();
 
-    // Apply font style and size
-    const styledMessage = chalk.rgb(255, 255, 255).bgHex(randomColor)[randomStyle].bold(currentWord);
+    // Generate a random capitalization
+    const capitalizedWord = getRandomCapitalization(currentWord);
+
+    // Apply font style, color, and size
+    const styledMessage = chalk.rgb(255, 255, 255).bgHex(randomColor)[randomStyle].bold(capitalizedWord);
     console.log(styledMessage);
     return;
   }
@@ -42,7 +54,7 @@ async function generateCombinations(letters, wordLength, currentWord = '') {
 
 // Define the letters and maximum word length
 const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
-const maxLength = 45;
+const maxLength = 12;
 
 // Increase the font size of console.log
 console.log('\n');
